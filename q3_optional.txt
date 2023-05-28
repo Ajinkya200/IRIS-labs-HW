@@ -1,0 +1,57 @@
+
+module dff (input d,  
+              input rstn,  
+              input clk,  
+              output reg q);  
+  
+    always @ (posedge clk or negedge rstn)  
+       if (!rstn)  
+          q <= 0;  
+       else  
+          q <= d;  
+endmodule  
+
+
+
+//testbench
+// Code your testbench here
+// or browse Examples
+
+
+module tb_dff;  
+    reg clk;  
+    reg d;  
+    reg rstn;  
+      
+  
+    dff  dff0 ( .d(d),  
+                .rstn (rstn),  
+                .clk (clk),  
+                .q (q));  
+  
+    // Generate clock  
+    always #5 clk = ~clk;  
+  
+    // Testcase  
+    initial begin  
+      $dumpfile("dff.vcd");
+      $dumpvars(0,tb_dff);
+      $monitor($time,q);
+        clk <= 0;  
+        d <= 0;  
+        rstn <= 0; 
+       #5 d <= 1;  
+        #5 rstn <= 1;
+        #5d<=1;  
+        #5 rstn <= 0; 
+       #5 d <= 1;  
+        #5 rstn <= 1;
+      #5d<=1;  
+        #5 rstn <= 0;
+
+      #50$finish;
+        
+        end  
+endmodule  
+    
+                 
